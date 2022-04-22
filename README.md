@@ -1,17 +1,27 @@
-# node-restify-validation
-```diff
--Maintener wanted
-```
-Validation for REST Services built with [node-restify](https://github.com/mcavage/node-restify) in node.js
+# restify-fresh-validation
 
+Up-to-date request validation middleware for [Restify](http://restify.com/)
+
+This is a maintained fork of the long-abandoned, maintainer-unreachable original [node-restify-validation](https://github.com/z0mt3c/node-restify-validation) package.
+
+## WIP
+
+We're in the process of updating the package to address all pending issues, pull requests, vulns and outdated dependencies. Please bear with us for a little longer.
+
+<!-- 
 [![Build Status](https://travis-ci.org/gchauvet/node-restify-validation.png)](https://travis-ci.org/gchauvet/node-restify-validation)
 [![Coverage Status](https://coveralls.io/repos/gchauvet/node-restify-validation/badge.png?branch=master)](https://coveralls.io/r/gchauvet/node-restify-validation?branch=master)
 [![Dependency Status](https://gemnasium.com/gchauvet/node-restify-validation.png)](https://gemnasium.com/gchauvet/node-restify-validation)
+ -->
 
 ## Requirements
-* node-restify-validation requires at least restify 2.6.0 since the validation model is defined in the route-object. (https://github.com/mcavage/node-restify/pull/408)
 
-## Simple request validation with node-restify
+* Restify 2.6+, but compatible with Restify 7's router changes (2018).
+
+## Simple request validation with Restify
+
+**WIP: this README will get updated as we work through issues.**
+
 Goal of this little project is to have the validation rules / schema as close to the route itself as possible on one hand without messing up the logic with further LOCs on the other hand.
 
 Example:
@@ -119,199 +129,10 @@ Example:
 ## Use
 Simply install it through npm
 
-    npm install node-restify-validation
+    npm install restify-fresh-validation
 
-
-## Documentation powered by swagger
-On top of the validation schema the [node-restify-swagger](https://github.com/z0mt3c/node-restify-swagger) library should later-on generate the swagger resources to provide a hands-on documentation.
-
-
-## Supported validations
-
-```javascript
-    isRequired: true | function()
-    equalTo: {'fieldName'}
-```
-
-Powered by [node-validator](https://github.com/chriso/validator.js).
-
-    contains
-    equals
-    is
-    isAfter
-    isAlpha
-    isAlphanumeric
-    isBefore
-    isBoolean
-    isCreditCard
-    isDate
-    isDecimal
-    isDivisibleBy
-    isEmail
-    isFloat
-    isHexColor
-    isHexadecimal
-    isIP
-    isIPNet
-    isIPv4
-    isIPv6
-    isIn
-    isInt
-    isNatural
-    isLowercase
-    isNumeric
-    isUUID
-    isUUIDv3
-    isUUIDv4
-    isUppercase
-    isUrl
-    max
-    min
-    not
-    notContains
-    notIn
-    notRegex
-    regex
-
-## Nested validation
-
-Validation nesting allows validating content that contains objects and arrays.
-
-### isArray
-
-Validates that specified value is an array.  It can take a boolean value or
-an object with the following attributes:
-
-- minLength - minimum number of elements (use with `{ isRequired: true }`)
-- maxLength - maximum number of elements
-- element - validation specification for elements inside the array
-
-
-```
-{
-  content: {
-    comments: {
-        isArray: true
-    },
-    emailAddresses: {
-        isRequired: true,
-        isArray: {
-            minLength: 1,
-            maxLength: 10,
-            element: { isEmail: true }
-        }
-    }
-  }
-}
-```
-
-### isObject
-
-Validates that the specified value is an object.  It can take a boolean value or
-and object with the following attributes:
-
-- properties: validation specification for the contents of the object
-
-```
-{
-    content: {
-        data: {
-            isObject: true
-        },
-        person: {
-            isRequired: true,
-            isObject: {
-                properties: {
-                    first: { isRequired: true },
-                    last: { isRequired: true },
-                    middle: { isRequired: false },
-                    address: {
-                        isObject: {
-                            properties: {
-                                street: { isRequired: true },
-                                city: { isRequired: true },
-                                state: { isRequired: true }
-                            }
-                        }
-                    },
-                    emails: {
-                        isArray: {
-                            maxLength: 5,
-                            element: { isEmail: true }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-### isDictionary
-
-Validates that specified value is a dictionary.  It can take a boolean value or
-an object with the following attributes:
-
-- minLength - minimum number of elements (use with `{ isRequired: true }`)
-- maxLength - maximum number of elements
-- key - validation specification for the dictionary keys
-- value - validation specification for the dictionary values
-
-
-```
-{
-  content: {
-    users: {
-        isDictionary: {
-            minLength: 1,
-            maxLength: 10,
-            key: { isEmail: true },
-            value: {
-                isObject: {
-                    name: { isRequired: true },
-                    phone: { isRequired: true },
-                    year: { isInt: true }
-                }
-            }
-        }
-    }
-  }
-}
-```
-
-## Conditional validations
-All validation parameters are able to deal with functions as parameters.
-
-For instance the parameterMatches-Condition:
-```javascript
-module.exports.paramMatches = function (params) {
-    return conditionalChecker(params, function (matches, value) {
-        var result;
-        if (_.isArray(matches)) {
-            result = _.contains(matches, value);
-        } else {
-            result = _.isEqual(matches, value);
-        }
-        return result;
-    });
-};
-```
-Which will be used for instance as follows:
-
-```javascript
-    var validation = isRequired: require('node-restify-validation');
-    //...
-    parameter: { isRequired: validation.when.paramMatches({(scope: '...',) variable: 'param1', matches: ['a', 'b']}) }
-```
-
-As result the parameter will only be required when param1 matches a or b. The called method will have a context (this) containing the following information:
-
-* req: the request object
-* scope: (real) current scope validation
-* validationModel: the complete validation model
-* validationRules: the validationRules for the current atribute
-* options: the options which have initially been passed
-* recentErrors: errors which have been computed until now
+<!-- FIXME: CHECK ORIGINAL VALIDATOR.JS FEATURES THAT SEEM TO HAVE BEEN DUPLICATED HERE, DELEGATE TO VALIDATOR INSTEAD -->
+<!-- FIXME: EXPLORE CONDITIONAL VALIDATION ORIGINAL INFO -->
 
 ## Models
 
@@ -395,14 +216,12 @@ server.use(restifyValidation.validationPlugin({
 }));
 ```
 
-## Inspiration
-node-restify-validation was & is inspired by [backbone.validation](https://github.com/thedersen/backbone.validation).
-In terms of validation node-restify-validation makes use of [node-validator](https://github.com/chriso/node-validator).
-
 ## License
+
 The MIT License (MIT)
 
-Copyright (c) 2014 Timo Behrmann, Guillaume Chauvet
+Copyright (c) 2022 Christophe Porteneuve / Delicious Insights
+Original (forked) code copyright (c) 2014 Timo Behrmann, Guillaume Chauvet
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
