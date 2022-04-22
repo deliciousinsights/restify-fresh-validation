@@ -30,17 +30,24 @@
     "test": "mocha --recursive test"
   },
   "main": "lib/index",
-  "readmeFilename": "README.md",
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
   "dependencies": {
     "lodash": "3.10.x",
     "validator": "3.22.x"
   },
+  "peerDependencies": {
+    "restify": ">= 2.8.1"
+  },
   "devDependencies": {
-    "restify": ">=2.8.1",
+    "coveralls": "2.12.x",
     "mocha": "3.1.x",
-    "sinon": "1.11.x",
+    "prettier": "^2.6.2",
+    "restify": ">=2.8.1",
     "should": "11.1.x",
-    "supertest": "2.0.x",
-    "coveralls": "2.12.x"
+    "sinon": "1.11.x",
+    "supertest": "2.0.x"
   }
 }
