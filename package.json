@@ -1,10 +1,13 @@
 {
-  "name": "node-restify-validation",
-  "version": "1.3.0",
+  "name": "restify-fresh-validation",
+  "version": "1.4.0",
   "author": {
-    "name": "Timo Behrmann"
+    "name": "Christophe Porteneuve",
+    "email": "christophe@delicious-insights.com",
+    "url": "https://delicious-insights.com/en/"
   },
   "contributors": [
+    "Timo Behrmann",
     "Marcos Sanz",
     "Guillaume Chauvet",
     "Stefan Schärmeli"
@@ -18,10 +21,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/z0mt3c/node-restify-validation.git"
+    "url": "git://github.com/deliciousinsights/restify-fresh-validation.git"
   },
   "bugs": {
-    "url": "https://github.com/z0mt3c/node-restify-validation/issues"
+    "url": "https://github.com/deliciousinsights/restify-fresh-validation/issues"
   },
   "scripts": {
     "test": "mocha --recursive test"
@@ -33,7 +36,7 @@
     "validator": "3.22.x"
   },
   "devDependencies": {
-    "restify": ">=2.8.1 <5.0.0",
+    "restify": ">=2.8.1",
     "mocha": "3.1.x",
     "sinon": "1.11.x",
     "should": "11.1.x",
