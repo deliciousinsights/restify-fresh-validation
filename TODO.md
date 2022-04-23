@@ -1,12 +1,5 @@
 - Dependency updates (esp. vulns)
 
-Lodash:
-
-Closes https://github.com/z0mt3c/node-restify-validation/issues/86
-Closes https://github.com/z0mt3c/node-restify-validation/pull/87
-
-Mocha, Supertest (high priority)
-Coveralls (removal? Is it even used?)
 Should
 Sinon
 Validator (will likely require TONS of updates)

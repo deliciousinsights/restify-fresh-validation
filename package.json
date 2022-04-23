@@ -35,7 +35,7 @@
     "semi": false
   },
   "engines": {
-    "node": ">= 8"
+    "node": ">= 12"
   },
   "dependencies": {
     "lodash": "^4.17.21",
@@ -45,12 +45,11 @@
     "restify": ">= 2.8.1"
   },
   "devDependencies": {
-    "coveralls": "2.12.x",
-    "mocha": "3.1.x",
+    "mocha": "^9.2.2",
     "prettier": "^2.6.2",
     "restify": ">=2.8.1",
     "should": "11.1.x",
     "sinon": "1.11.x",
-    "supertest": "2.0.x"
+    "supertest": "^6.2.2"
   }
 }

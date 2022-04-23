@@ -8,15 +8,10 @@ This is a maintained fork of the long-abandoned, maintainer-unreachable original
 
 We're in the process of updating the package to address all pending issues, pull requests, vulns and outdated dependencies. Please bear with us for a little longer.
 
-<!-- 
-[![Build Status](https://travis-ci.org/gchauvet/node-restify-validation.png)](https://travis-ci.org/gchauvet/node-restify-validation)
-[![Coverage Status](https://coveralls.io/repos/gchauvet/node-restify-validation/badge.png?branch=master)](https://coveralls.io/r/gchauvet/node-restify-validation?branch=master)
-[![Dependency Status](https://gemnasium.com/gchauvet/node-restify-validation.png)](https://gemnasium.com/gchauvet/node-restify-validation)
- -->
-
 ## Requirements
 
-* Restify 2.6+, but compatible with Restify 7's router changes (2018).
+- Restify 2.6+, but compatible with Restify 7's router changes (2018).
+- Node 12+
 
 ## Simple request validation with Restify
 
@@ -25,108 +20,141 @@ We're in the process of updating the package to address all pending issues, pull
 Goal of this little project is to have the validation rules / schema as close to the route itself as possible on one hand without messing up the logic with further LOCs on the other hand.
 
 Example:
+
 ```javascript
-    var server = restify.createServer();
-    server.use(restify.queryParser());
-    server.use(restifyValidation.validationPlugin( {
-        // Shows errors as an array
-        errorsAsArray: false,
-        // Not exclude incoming variables not specified in validator rules
-        forbidUndefinedVariables: false,
-        errorHandler: restify.errors.InvalidArgumentError
-    }));
+var server = restify.createServer()
+server.use(restify.queryParser())
+server.use(
+  restifyValidation.validationPlugin({
+    // Shows errors as an array
+    errorsAsArray: false,
+    // Not exclude incoming variables not specified in validator rules
+    forbidUndefinedVariables: false,
+    errorHandler: restify.errors.InvalidArgumentError,
+  })
+)
 
-    server.get({url: '/test/:name', validation: {
+server.get(
+  {
+    url: '/test/:name',
+    validation: {
       resources: {
-        name: { isRequired: true, isIn: ['foo','bar'] }
+        name: { isRequired: true, isIn: ['foo', 'bar'] },
       },
-      queries : {
-        status: { isRequired: true, isIn: ['foo','bar'] },
+      queries: {
+        status: { isRequired: true, isIn: ['foo', 'bar'] },
         email: { isRequired: false, isEmail: true },
-        age: { isRequired: true, isNatural: true }
-      }
-    }}, function (req, res, next) {
-        res.send(req.params);
-    });
-
-    // Ensure there is a file uploaded:
-    server.post({url: '/test/:name', validation: {
-      resources: {
-        name: { isRequired: true, isIn: ['foo','bar'] }
+        age: { isRequired: true, isNatural: true },
       },
-      files : {
-        myfile: { isRequired: true }
-      }
-    }}, function (req, res, next) {
-        res.send(req.params);
-    });
+    },
+  },
+  function (req, res, next) {
+    res.send(req.params)
+  }
+)
 
-    // Checks the body of the request contains a json payload with a `person` object with the following attributes:
-    //   firstName - required
-    //   middle - optional
-    //   lastName - required
-    //   emails - optional array of email addresses with at most 5 elements
-    server.put({url: '/products/:id/labels/:label', validation: {
+// Ensure there is a file uploaded:
+server.post(
+  {
+    url: '/test/:name',
+    validation: {
+      resources: {
+        name: { isRequired: true, isIn: ['foo', 'bar'] },
+      },
+      files: {
+        myfile: { isRequired: true },
+      },
+    },
+  },
+  function (req, res, next) {
+    res.send(req.params)
+  }
+)
+
+// Checks the body of the request contains a json payload with a `person` object with the following attributes:
+//   firstName - required
+//   middle - optional
+//   lastName - required
+//   emails - optional array of email addresses with at most 5 elements
+server.put(
+  {
+    url: '/products/:id/labels/:label',
+    validation: {
       resources: {
         id: { isRequired: true, isNatural: true },
-        label: { isRequired: true }
+        label: { isRequired: true },
       },
-      queries : {
-        status: { isRequired: true, isIn: ['foo','bar'] }
+      queries: {
+        status: { isRequired: true, isIn: ['foo', 'bar'] },
       },
       content: {
         person: {
-            isObject: {
-                properties: {
-                    firstName: { isRequired: true },
-                    middle: { isRequired: false },
-                    lastName: { isRequired: true },
-                    emails: {
-                        isArray: {
-                            maxLength: 5,
-                            element: { isEmail: true }
-                        }
-                    }
-                }
-            }
+          isObject: {
+            properties: {
+              firstName: { isRequired: true },
+              middle: { isRequired: false },
+              lastName: { isRequired: true },
+              emails: {
+                isArray: {
+                  maxLength: 5,
+                  element: { isEmail: true },
+                },
+              },
+            },
+          },
         },
-        label: { isRequired: true }
-      }
-    }}, function (req, res, next) {
-        res.send(req.params);
-    });
+        label: { isRequired: true },
+      },
+    },
+  },
+  function (req, res, next) {
+    res.send(req.params)
+  }
+)
 
-    // Validate header fields
-    server.get({url: '/test/something/:name', validation: {
+// Validate header fields
+server.get(
+  {
+    url: '/test/something/:name',
+    validation: {
       resources: {
-        name: { isRequired: true, isIn: ['foo','bar'] }
+        name: { isRequired: true, isIn: ['foo', 'bar'] },
       },
       headers: {
-        requestid: { isRequired: true }
-      }
-    }}, function (req, res, next) {
-        res.send(req.params);
-    });
+        requestid: { isRequired: true },
+      },
+    },
+  },
+  function (req, res, next) {
+    res.send(req.params)
+  }
+)
 
-    // Validate header fields
-    server.get({url: '/test/something/:name', validation: {
+// Validate header fields
+server.get(
+  {
+    url: '/test/something/:name',
+    validation: {
       resources: {
-        name: { isRequired: true, isIn: ['foo','bar'] }
+        name: { isRequired: true, isIn: ['foo', 'bar'] },
       },
       headers: {
-        requestid: { isRequired: true }
-      }
-    }}, function (req, res, next) {
-        res.send(req.params);
-    });
+        requestid: { isRequired: true },
+      },
+    },
+  },
+  function (req, res, next) {
+    res.send(req.params)
+  }
+)
 
-    server.listen(8001, function () {
-        console.log('%s listening at %s', server.name, server.url);
-    });
+server.listen(8001, function () {
+  console.log('%s listening at %s', server.name, server.url)
+})
 ```
 
-
 ## Use
+
 Simply install it through npm
 
     npm install restify-fresh-validation
@@ -184,11 +212,13 @@ To avoid having to specify models in your validation configurations, you can
 configure models to be automatically applied based on the validator.
 
 ```javascript
-server.use(restifyValidation.validationPlugin({
+server.use(
+  restifyValidation.validationPlugin({
     validatorModels: {
-        isInt: Number
-    }
-}));
+      isInt: Number,
+    },
+  })
+)
 ```
 
 When you specify the standard `restifyValidation.validatorModels`, it will supply models
@@ -207,13 +237,12 @@ The following example uses `restifyValidation.validatorModels` but then override
 the model for the `isDate` validator to map values to `moment` rather than to `Date`.
 
 ```javascript
-var moment = require('moment');
-server.use(restifyValidation.validationPlugin({
-    validatorModels: [
-        restifyValidation.validatorModels,
-        { isDate: moment }
-    ]
-}));
+var moment = require('moment')
+server.use(
+  restifyValidation.validationPlugin({
+    validatorModels: [restifyValidation.validatorModels, { isDate: moment }],
+  })
+)
 ```
 
 ## License
