@@ -38,7 +38,7 @@
     "node": ">= 8"
   },
   "dependencies": {
-    "lodash": "3.10.x",
+    "lodash": "^4.17.21",
     "validator": "3.22.x"
   },
   "peerDependencies": {
