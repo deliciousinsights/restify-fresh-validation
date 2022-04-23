@@ -12,7 +12,7 @@ describe('[INTEGRATION][RESTIFY]', function () {
       before(function (done) {
         server = restify.createServer()
         server.use(
-          restify.bodyParser({
+          restify.plugins.bodyParser({
             mapParams: false,
           })
         )
@@ -86,9 +86,9 @@ describe('[INTEGRATION][RESTIFY]', function () {
       var server
       before(function (done) {
         server = restify.createServer()
-        server.use(restify.bodyParser({ mapParams: false }))
+        server.use(restify.plugins.bodyParser({ mapParams: false }))
         server.use(validationParser({ mapParams: true }))
-        server.use(restify.queryParser({ mapParams: false }))
+        server.use(restify.plugins.queryParser({ mapParams: false }))
         server.listen(0, function () {
           server.get(
             {
@@ -148,7 +148,7 @@ describe('[INTEGRATION][RESTIFY]', function () {
 
       before(function (done) {
         server = restify.createServer()
-        server.use(restify.bodyParser())
+        server.use(restify.plugins.bodyParser())
         server.use(
           validationParser({
             forbidUndefinedVariables: false,

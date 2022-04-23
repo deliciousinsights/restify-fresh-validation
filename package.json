@@ -34,6 +34,9 @@
     "singleQuote": true,
     "semi": false
   },
+  "engines": {
+    "node": ">= 8"
+  },
   "dependencies": {
     "lodash": "3.10.x",
     "validator": "3.22.x"
