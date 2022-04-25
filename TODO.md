@@ -1,7 +1,5 @@
 - Dependency updates (esp. vulns)
 
-Should
-Sinon
 Validator (will likely require TONS of updates)
 
 - Ensure all Validator.js features are properly exposed and use proper messaging

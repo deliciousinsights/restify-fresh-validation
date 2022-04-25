@@ -15,18 +15,15 @@ describe('Plugin test', function () {
   })
 
   it('Call handleErrors on validation failures', function (done) {
-    var processValidation = sinon.stub(
-      index.validation,
-      'process',
-      function (validationModel, req, options) {
+    var processValidation = sinon
+      .stub(index.validation, 'process')
+      .callsFake(function (validationModel, req, options) {
         return error
-      }
-    )
+      })
 
-    var handleErrors = sinon.stub(
-      index.error,
-      'handle',
-      function (errors, req, res, options, next) {
+    var handleErrors = sinon
+      .stub(index.error, 'handle')
+      .callsFake(function (errors, req, res, options, next) {
         errors.should.equal(error)
         req.should.equal(req_validation_empty)
         res.should.equal(res_empty)
@@ -36,8 +33,7 @@ describe('Plugin test', function () {
         handleErrors.restore()
         done()
         return null
-      }
-    )
+      })
 
     index.validationPlugin()(req_validation_empty, res_empty, function () {
       true.should.not.be.ok
@@ -45,14 +41,12 @@ describe('Plugin test', function () {
   })
 
   it('Call next on successful validation', function (done) {
-    var processValidation = sinon.stub(
-      index.validation,
-      'process',
-      function (validationModel, req, options) {
+    var processValidation = sinon
+      .stub(index.validation, 'process')
+      .callsFake(function (validationModel, req, options) {
         req.should.equal(req_validation_empty)
         return []
-      }
-    )
+      })
 
     var handleErrorsSpy = sinon.spy(index.error, 'handle')
 
