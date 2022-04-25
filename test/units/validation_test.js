@@ -617,9 +617,9 @@ describe('Validation', function () {
       it('validate array elements', function () {
         var validationReq = {
           body: {
-            numbers: [1, 5, 67],
-            numbersInvalid: [1, 5, 'a', 67, 'b'],
-            numbersAndNull: [1, 5, null, 67],
+            numbers: ['1', '5', '67'],
+            numbersInvalid: ['1', '5', 'a', '67', 'b'],
+            numbersAndNull: ['1', '5', null, '67'],
           },
         }
 
@@ -854,9 +854,9 @@ describe('Validation', function () {
       it('validate dictionary values', function () {
         var validationReq = {
           body: {
-            numbers: { a: 1, b: 5, c: 67 },
-            numbersInvalid: { a: 1, b: 5, c: 'a', d: 67, e: 'b' },
-            numbersAndNull: { a: 1, b: 5, c: null, d: 67 },
+            numbers: { a: '1', b: '5', c: '67' },
+            numbersInvalid: { a: '1', b: '5', c: 'a', d: '67', e: 'b' },
+            numbersAndNull: { a: '1', b: '5', c: null, d: '67' },
           },
         }
 
@@ -907,13 +907,13 @@ describe('Validation', function () {
         body: {
           person: {
             name: 'Bob',
-            age: 50,
+            age: '50',
             preferences: {
-              favoriteNumber: -333,
+              favoriteNumber: '-333',
             },
           },
           strVal: "I'm just a string",
-          arrVal: [123, 'bob'],
+          arrVal: ['123', 'bob'],
         },
       }
 
@@ -1020,7 +1020,7 @@ describe('Validation', function () {
           },
           {
             prepare: function (request) {
-              request.body.person.age = -5
+              request.body.person.age = '-5'
             },
             expected: { type: 'INVALID', field: 'person.age' },
           },
