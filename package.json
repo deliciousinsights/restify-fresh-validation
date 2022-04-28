@@ -50,6 +50,6 @@
     "restify": ">=2.8.1",
     "should": "^13.2.3",
     "sinon": "^13.0.2",
-    "supertest": "^6.2.2"
+    "supertest": "^6.2.3"
   }
 }
