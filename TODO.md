@@ -1,7 +1,6 @@
-- Ensure all Validator.js features are properly exposed and use proper messaging
 - Restore when applicable stripped parts of README (conditional checks, etc.)
-- Attempt to remove Lodash entirely (check used Lodash methods semantics)
 - Address issues: https://github.com/z0mt3c/node-restify-validation/issues
+- Attempt to remove Lodash entirely (check used Lodash methods semantics)
 - Code cleanup within lib (ES2015+, strict mode)
 - Migrate from Mocha / should to Jest
 - Setup Travis CI; check badge
